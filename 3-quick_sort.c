@@ -17,17 +17,14 @@ void quick_sort(int *array, size_t size)
 
 	/* Call the recursive quicksort function */
 	quicksort(array, 0, size - 1, size);
-
-	/* Print the sorted array */
-	print_array(array, size);
 }
 
 /**
  * quicksort - Recursive function for Quick sort with Lomuto partition scheme
  *
  * @array: Array to be sorted
- * @low: Low index of the partition
- * @high: High index of the partition
+ * @left: left index of the partition
+ * @right: Right index of the partition
  * @size: Size of the array
  *
  * Description: This function performs the recursive Quick sort using Lomuto
@@ -35,18 +32,18 @@ void quick_sort(int *array, size_t size)
  *
  * Return: void
  */
-void quicksort(int *array, int low, int high, size_t size)
+void quicksort(int *array, int left, int right, size_t size)
 {
 	int pidx;
 
-	if (low < high)
+	if (left < right)
 	{
 		/* Get the partition index */
-		pidx = lomuto_partition(array, low, high, size);
+		pidx = lomuto_partition(array, left, right, size);
 
 		/* Recursively sort the subarrays */
-		quicksort(array, low, pidx - 1, size);
-		quicksort(array, pidx + 1, high, size);
+		quicksort(array, left, pidx - 1, size);
+		quicksort(array, pidx + 1, right, size);
 	}
 }
 
@@ -54,8 +51,8 @@ void quicksort(int *array, int low, int high, size_t size)
  * lomuto_partition - Lomuto partition scheme for Quick sort
  *
  * @array: Array to be partitioned
- * @low: Low index of the partition
- * @high: High index of the partition
+ * @left: Left(low) index of the partition
+ * @right: Right(unsorted) index of the partition
  * @size: Size of the array
  *
  * Description: This function chooses the last element as the pivot,
@@ -63,31 +60,29 @@ void quicksort(int *array, int low, int high, size_t size)
  *
  * Return: Partition index
  */
-int lomuto_partition(int *array, int low, int high, size_t size)
+int lomuto_partition(int *array, int left, int right, size_t size)
 {
-	int pivot = array[high];
-	int i = low - 1, j, temp;
+	int pivot = array[right], i = left, j, temp;
 
-	for (j = low; j <= high - 1; j++)
+	for (j = left; j < right; j++)
 	{
 		if (array[j] <= pivot)
 		{
+			if (i < j)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+				print_array(array, size);
+			}
 			i++;
-			/* Swap array[i] and array[j] */
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-			/* Print the array after each swap */
-			print_array(array, size);
 		}
 	}
-
-	/* Swap array[i + 1] and array[high] to place pivot in correct pos */
-	temp = array[i + 1];
-	array[i + 1] = array[high];
-	array[high] = temp;
-	/* Print the array after each swap */
-	print_array(array, size);
-
-	return (i + 1);
+	if (right != i)
+	{
+		array[right] = array[i];
+		array[i] = pivot;
+		print_array(array, size);
+	}
+	return (i);
 }
