@@ -3,16 +3,16 @@
 /**
  * swap_nodes - function swaps nodes at pointer p with the following node
  * @list: head of list
- * @p: pointer to node
+ * @node: pointer to node
  */
-void swap_nodes(listint_t **list, listint_t **p)
+void swap_nodes(listint_t **list, listint_t **node)
 {
 	listint_t *one, *two, *three, *four;
 
-	one = (*p)->prev;
-	two = *p;
-	three = (*p)->next;
-	four = (*p)->next->next;
+	one = (*node)->prev;
+	two = *node;
+	three = (*node)->next;
+	four = (*node)->next->next;
 	two->next = four;
 	if (four)
 		four->prev = two;
@@ -23,7 +23,7 @@ void swap_nodes(listint_t **list, listint_t **p)
 	else
 		*list = three;
 	two->prev = three;
-	*p = three;
+	*node = three;
 }
 
 /**
