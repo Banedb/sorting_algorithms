@@ -1,24 +1,6 @@
 #include "sort.h"
 
 /**
- * list_len - function returns length of list
- * @list: head of list
- *
- * Return: length
- */
-size_t list_len(listint_t *list)
-{
-	size_t len = 0;
-
-	while (list)
-	{
-		len++;
-		list = list->next;
-	}
-	return (len);
-}
-
-/**
  * swap_nodes - function swaps nodes at pointer p with the following node
  * @list: head of list
  * @p: pointer to node
