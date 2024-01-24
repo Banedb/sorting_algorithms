@@ -86,14 +86,14 @@ deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 }
 
 /**
- * insertion_sort_deck - Sort a deck using the insertion sort algorithm.
+ * insertion_sort - Sort a deck using the insertion sort algorithm.
  * @deck: Pointer to the deck of cards to be sorted.
  *
  * Description:
  * This function sorts a deck using the insertion sort algorithm.
  * It compares the positions of cards and rearranges them accordingly.
  */
-void insertion_sort_deck(deck_node_t **deck)
+void insertion_sort(deck_node_t **deck)
 {
 	int value_prev, value_current;
 	deck_node_t *node;
@@ -125,10 +125,10 @@ void insertion_sort_deck(deck_node_t **deck)
  *
  * Description:
  * This function acts as an entry point for sorting a deck using the
- * insertion sort algorithm. It simply calls the insertion_sort_deck
+ * insertion sort algorithm. It simply calls the insertion_sort
  * function.
  */
 void sort_deck(deck_node_t **deck)
 {
-	insertion_sort_deck(deck);
+	insertion_sort(deck);
 }
