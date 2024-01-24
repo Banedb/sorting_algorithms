@@ -1,31 +1,38 @@
 #include "deck.h"
 #include <stdio.h>
-/**
- *_strcmp - compare two strings
- *@str1: string
- *@str2: string
- *Return: 1 str1 and str2 is equal, 0 they are not equal
- */
-int _strcmp(const char *str1, const char *str2)
-{
-	size_t i = 0;
 
-	if (*str1 == '\0')
-		return (0);
-	while (str1[i])
-	{
-		if (str1[i] != str2[i])
-			return (0);
-		i++;
-	}
-	if (str1[i] == '\0' && str2[i])
-		return (0);
-	return (1);
-}
 /**
- * get_card_position - return the position based on card you put in
- * @node: represent the card
- * Return: return the card position
+ * _strcmp -  function that compares two strings.
+ * @s1: first char
+ * @s2: second char
+ * Return: 0.
+ */
+
+int _strcmp(const char *s1, const char *s2)
+{
+	int res = 0;
+
+	while (*s1 == *s2 && *s1 != '\0')
+	{
+		s1++;
+		s2++;
+	}
+	if (s1 != s2)
+		res = *s1 - *s2;
+
+	return (res);
+}
+
+/**
+ * get_card_position - Get the position value of a card in a deck.
+ * @node: Pointer to the deck node containing the card.
+ *
+ * Description:
+ * This function calculates and returns the position value of a card
+ * within a deck. The position value is determined based on the card's
+ * rank and suit, and it helps in comparing and sorting cards.
+ *
+ * @return: The position value of the card.
  */
 int get_card_position(deck_node_t *node)
 {
@@ -48,16 +55,22 @@ int get_card_position(deck_node_t *node)
 	value += (*node).card->kind * 13;
 	return (value);
 }
+
 /**
- *swap_card - swap a card for his previous one
- *@card: card
- *@deck: card deck
- *Return: return a pointer to a card which was enter it
+ * swap_card - Swap a card with its previous card in a deck.
+ * @card: Pointer to the card node to be swapped.
+ * @deck: Pointer to the deck containing the cards.
+ *
+ * Description:
+ * This function swaps a given card with its previous card in a deck.
+ * It adjusts the pointers accordingly to maintain the deck's doubly
+ * linked list structure.
+ *
+ * @return: Pointer to the card node after the swap.
  */
 deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 {
 	deck_node_t *back = card->prev, *current = card;
-	/*NULL, 19, 48, 9, 71, 13, NULL*/
 
 	back->next = current->next;
 	if (current->next)
@@ -73,9 +86,12 @@ deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 }
 
 /**
- * insertion_sort_deck - function that sorts a doubly linked deck
- * of integers in ascending order using the Insertion sort algorithm
- * @deck: Dobule linked deck to sort
+ * insertion_sort_deck - Sort a deck using the insertion sort algorithm.
+ * @deck: Pointer to the deck of cards to be sorted.
+ *
+ * Description:
+ * This function sorts a deck using the insertion sort algorithm.
+ * It compares the positions of cards and rearranges them accordingly.
  */
 void insertion_sort_deck(deck_node_t **deck)
 {
@@ -104,9 +120,13 @@ void insertion_sort_deck(deck_node_t **deck)
 	}
 }
 /**
- * sort_deck - sort a deck you put in using
- * insertion sort algorithm
- * @deck: deck
+ * sort_deck - Sort a deck using the insertion sort algorithm.
+ * @deck: Pointer to the deck of cards to be sorted.
+ *
+ * Description:
+ * This function acts as an entry point for sorting a deck using the
+ * insertion sort algorithm. It simply calls the insertion_sort_deck
+ * function.
  */
 void sort_deck(deck_node_t **deck)
 {
