@@ -27,12 +27,11 @@ int _strcmp(const char *s1, const char *s2)
  * get_card_position - Get the position value of a card in a deck.
  * @node: Pointer to the deck node containing the card.
  *
- * Description:
- * This function calculates and returns the position value of a card
+ * Description: calculates and returns the position value of a car
  * within a deck. The position value is determined based on the card's
  * rank and suit, and it helps in comparing and sorting cards.
  *
- * @return: The position value of the card.
+ * Return: The position value of the card.
  */
 int get_card_position(deck_node_t *node)
 {
@@ -61,12 +60,11 @@ int get_card_position(deck_node_t *node)
  * @card: Pointer to the card node to be swapped.
  * @deck: Pointer to the deck containing the cards.
  *
- * Description:
- * This function swaps a given card with its previous card in a deck.
+ * Description: swaps a given card with its previous card in a deck.
  * It adjusts the pointers accordingly to maintain the deck's doubly
  * linked list structure.
  *
- * @return: Pointer to the card node after the swap.
+ * Return: Pointer to the card node after the swap.
  */
 deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 {
@@ -89,8 +87,7 @@ deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
  * insertion_sort - Sort a deck using the insertion sort algorithm.
  * @deck: Pointer to the deck of cards to be sorted.
  *
- * Description:
- * This function sorts a deck using the insertion sort algorithm.
+ * Description: This function sorts a deck using the insertion sort algorithm.
  * It compares the positions of cards and rearranges them accordingly.
  */
 void insertion_sort(deck_node_t **deck)
