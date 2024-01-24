@@ -29,7 +29,7 @@ void heapify(int *array, size_t size, size_t root, size_t current)
 	{
 		temp = array[current];
 		array[current] = array[large];
-                array[large] = temp;
+		array[large] = temp;
 		print_array(array, size);
 		heapify(array, size, root, large);
 	}
