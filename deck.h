@@ -48,7 +48,8 @@ typedef struct deck_node_s
 } deck_node_t;
 
 int _strcmp(const char *s1, const char *s2);
-int compare_cards(const void *card1, const void *card2);
+int find_pos(deck_node_t *node);
+deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck);
 void sort_deck(deck_node_t **deck);
 
 

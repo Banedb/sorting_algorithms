@@ -72,9 +72,8 @@ deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 }
 
 /**
- * sort_deck - sort a deck you put in using
- * insertion sort algorithm
- * @deck: deck
+ * sort_deck - sorts deck
+ * @deck: deck of cards
  */
 void sort_deck(deck_node_t **deck)
 {
