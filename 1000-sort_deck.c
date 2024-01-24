@@ -1,33 +1,33 @@
 #include "deck.h"
 #include <stdio.h>
-
 /**
- * _strcmp -  function that compares two strings.
- * @s1: first char
- * @s2: second char
- * Return: 0.
+ *_strcmp - compare two strings
+ *@str1: string
+ *@str2: string
+ *Return: 1 str1 and str2 is equal, 0 they are not equal
  */
-
-int _strcmp(const char *s1, const char *s2)
+int _strcmp(const char *str1, char *str2)
 {
-	int res = 0;
+	size_t i = 0;
 
-	while (*s1 == *s2 && *s1 != '\0')
+	if (str1 == '\0')
+		return (0);
+	while (str1[i])
 	{
-		s1++;
-		s2++;
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
 	}
-	if (s1 != s2)
-		res = *s1 - *s2;
-
-	return (res);
+	if (str1[i] == '\0' && str2[i])
+		return (0);
+	return (1);
 }
 /**
- * find_pos - finds card position
- * @node: card
- * Return: the card position
+ * get_card_position - return the position based on card you put in
+ * @node: represent the card
+ * Return: return the card position
  */
-int find_pos(deck_node_t *node)
+int get_card_position(deck_node_t *node)
 {
 	int value;
 
@@ -49,14 +49,15 @@ int find_pos(deck_node_t *node)
 	return (value);
 }
 /**
- *swap_card - swaps card
+ *swap_card - swap a card for his previous one
  *@card: card
- *@deck: deck of cards
- *Return: ptr to switched card
+ *@deck: card deck
+ *Return: return a pointer to a card which was enter it
  */
 deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 {
 	deck_node_t *back = card->prev, *current = card;
+	/*NULL, 19, 48, 9, 71, 13, NULL*/
 
 	back->next = current->next;
 	if (current->next)
@@ -72,11 +73,11 @@ deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck)
 }
 
 /**
- * sort_deck - sort a deck you put in using
- * insertion sort algorithm
- * @deck: deck
+ * insertion_sort_deck - function that sorts a doubly linked deck
+ * of integers in ascending order using the Insertion sort algorithm
+ * @deck: Dobule linked deck to sort
  */
-void sort_deck(deck_node_t **deck)
+void insertion_sort_deck(deck_node_t **deck)
 {
 	int value_prev, value_current;
 	deck_node_t *node;
@@ -89,16 +90,25 @@ void sort_deck(deck_node_t **deck)
 		/* preparing the previous value */
 		if (node->prev)
 		{
-			value_prev = find_pos((node->prev));
-			value_current = find_pos(node);
+			value_prev = get_card_position((node->prev));
+			value_current = get_card_position(node);
 		}
 		while ((node->prev) && (value_prev > value_current))
 		{
-			value_prev = find_pos((node->prev));
-			value_current = find_pos(node);
+			value_prev = get_card_position((node->prev));
+			value_current = get_card_position(node);
 			node = swap_card(node, deck);
 
 		}
 		node = node->next;
 	}
+}
+/**
+ * sort_deck - sort a deck you put in using
+ * insertion sort algorithm
+ * @deck: deck
+ */
+void sort_deck(deck_node_t **deck)
+{
+	insertion_sort_deck(deck);
 }
