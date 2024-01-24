@@ -8,8 +8,7 @@
  * @mid: middle.
  * @right: Pointer to the right sub-array.
  */
-void merge(int *temp_array, int *array, size_t left,
-		    size_t mid, size_t right)
+void merge(int *temp_array, int *array, size_t left, size_t mid, size_t right)
 {
 	size_t i, j, k = 0;
 
