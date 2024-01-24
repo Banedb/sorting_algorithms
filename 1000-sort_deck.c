@@ -6,11 +6,11 @@
  *@str2: string
  *Return: 1 str1 and str2 is equal, 0 they are not equal
  */
-int _strcmp(const char *str1, char *str2)
+int _strcmp(const char *str1, const char *str2)
 {
 	size_t i = 0;
 
-	if (str1 == '\0')
+	if (*str1 == '\0')
 		return (0);
 	while (str1[i])
 	{
