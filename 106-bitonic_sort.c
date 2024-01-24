@@ -1,34 +1,29 @@
-#include <stdio.h>
+#include "sort.h"
 
 /**
  * bitonic_merge - Merges two halves of an array in a Bitonic manner
  * @array: The array to be merged
- * @size: The size of the array
+ * @left: left side
+ * @right: right side
  * @dir: The sorting direction (1 for ascending, 0 for descending)
- * @chunk_size: The size of the chunk being merged
  */
-void bitonic_merge(int *array, size_t size, int dir, size_t chunk_size)
+void bitonic_merge(int *array, int left, int right, int dir)
 {
-	size_t i, half;
+	int i, temp, step = (left + right) / 2, half = (right - left + 1) / 2;
 
-	if (chunk_size > 1)
+	if (right - left >= 1)
 	{
-		half = chunk_size / 2;
-		for (i = 0; i < size; i++)
+		for (i = left; i < left + half; i++)
 		{
-			if ((i < half && array[i] > array[i + half]) ||
-			    (i >= half && array[i] < array[i - half]))
+			if (dir == (array[i] > array[i + half]))
 			{
-				temp = array[i];
-				array[i] = array[i + half];
-				array[i + half] = temp;
-				printf("Result [%lu/%lu] (%s):\n", half, size, dir ? "UP" : "DOWN");
-				print_array(array, size);
+				temp = array[i + half];
+				array[i + half] = array[i];
+				array[i] = temp;
 			}
 		}
-
-		bitonic_merge(array, half, dir, half);
-		bitonic_merge(array + half, half, dir, half);
+		bitonic_merge(array, left, step, dir);
+		bitonic_merge(array, step + 1, right, dir);
 	}
 }
 
@@ -36,24 +31,33 @@ void bitonic_merge(int *array, size_t size, int dir, size_t chunk_size)
 /**
  * bitonic_recursive - Recursively performs Bitonic sort on an array
  * @array: The array to be sorted
- * @size: The size of the array
+ * @left: left side
+ * @right: right side
  * @dir: The sorting direction (1 for ascending, 0 for descending)
- * @chunk_size: The size of the chunk being sorted
+ * @size: The size of the chunk being sorted
  */
-void bitonic_recursive(int *array, size_t size, int dir, size_t chunk_size)
+void bitonic_recursive(int *array, int left, int right, int dir, size_t size)
 {
-	size_t half;
-	if (chunk_size > 1)
+	int step;
+
+	if (right - left >= 1)
 	{
-		half = chunk_size / 2;
-
-		printf("Merging [%lu/%lu] (%s):\n", half, size, dir ? "UP" : "DOWN");
-		print_array(array, size);
-
-		bitonic_recursive(array, half, 1, half);
-		bitonic_recursive(array + half, half, 0, half);
-
-		bitonic_merge(array, size, dir, chunk_size);
+		step = (right + left) / 2;
+		printf("Merging [%d/%lu] ", right - left + 1, size);
+		if (dir)
+			printf("(UP):\n");
+		else
+			printf("(DOWN):\n");
+		print_array(array + left, right - left + 1);
+		bitonic_recursive(array, left, step, 1, size);
+		bitonic_recursive(array, step + 1, right, 0, size);
+		bitonic_merge(array, left, right, dir);
+		printf("Result [%d/%lu] ", right - left + 1, size);
+		if (dir)
+			printf("(UP):\n");
+		else
+			printf("(DOWN):\n");
+		print_array(array + left, right - left + 1);
 	}
 }
 
@@ -64,5 +68,7 @@ void bitonic_recursive(int *array, size_t size, int dir, size_t chunk_size)
  */
 void bitonic_sort(int *array, size_t size)
 {
-	bitonic_recursive(array, size, 1, size);
+	if (!array || size < 2)
+		return;
+	bitonic_recursive(array, 0, size - 1, 1, size);
 }
