@@ -38,5 +38,6 @@ void heapify(int *array, size_t size, size_t base, size_t root);
 void heap_sort(int *array, size_t size);
 void count_sort(int *array, size_t size, int exp);
 void radix_sort(int *array, size_t size);
+void bitonic_sort(int *array, size_t size);
 
 #endif /* SORT_H */
