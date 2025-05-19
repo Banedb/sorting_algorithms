@@ -28,7 +28,7 @@ void quick_sort(int *array, size_t size);
 void quicksort(int *array, int left, int right, size_t size);
 int lomuto_partition(int *array, int left, int right, size_t size);
 void shell_sort(int *array, size_t size);
-void swap_nodes(listint_t **list, listint_t **node);
+void swap_nodes(listint_t **list, listint_t *current, listint_t *temp);
 void cocktail_sort_list(listint_t **list);
 void counting_sort(int *array, size_t size);
 void merge(int *temp_array, int *array, size_t left, size_t mid, size_t right);
