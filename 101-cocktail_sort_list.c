@@ -23,7 +23,6 @@ void swap_nodes(listint_t **list, listint_t *current, listint_t *temp)
 
 /**
  * cocktail_sort_list - implements the cocktail sort algorithm
- * for a doubly linked list (Ascending order sort)
  * @list: pointer to a doubly_linked list
  */
 void cocktail_sort_list(listint_t **list)
