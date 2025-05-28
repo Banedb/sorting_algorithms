@@ -1,72 +1,61 @@
 #include "sort.h"
 
 /**
- * radix_sort - Sorts an array of integers using LSD Radix sort algorithm.
- * @array: The array to be sorted.
- * @size: The size of the array.
+ * radix_counting_sort - counting sort implementation for radix sort
+ * @array: array to be sorted
+ * @size: size of the array
+ * @exp: digit position tracker
  */
-void radix_sort(int *array, size_t size)
+void radix_counting_sort(int *array, size_t size, int exp)
 {
-	int max_num, exp;
+	int num, j, count[10] = {0};
+	int *output = malloc(sizeof(array[0]) * size);
 	size_t i;
 
-	if (size < 2)
-		return;
+	/* count occurences of each digit */
+	for (i = 0; i < size; i++)
+		count[(array[i] / exp) % 10]++;
 
-	/* Find the maximum number to know the number of digits */
-	max_num = array[0];
-	for (i = 1; i < size; i++)
-	{
-		if (array[i] > max_num)
-			max_num = array[i];
-	}
-
-	/* Perform counting sort for every digit */
-	for (exp = 1; max_num / exp > 0; exp *= 10)
-	{
-		count_sort(array, size, exp);
-		print_array(array, size);
-	}
-}
-
-/**
- * count_sort - Perform counting sort on LSD for Radix sort.
- *
- * @array: The array to be sorted.
- * @size: The size of the array.
- * @exp: The current digit place value (1, 10, 100, ...).
- */
-void count_sort(int *array, size_t size, int exp)
-{
-	const int base = 10;
-	int i, *output = malloc(sizeof(int) * size), *count;
-	size_t j;
-
-	count = malloc(sizeof(int) * base);
-	if (output == NULL || count == NULL)
-		exit(EXIT_FAILURE);
-	for (i = 0; i < base; i++)
-		count[i] = 0;
-
-	/* Count occurrences of each digit in the current place value */
-	for (j = 0; j < size; j++)
-		count[(array[j] / exp) % base]++;
-
-	/* Adjust count array to store actual position of digits */
-	for (i = 1; i < base; i++)
+	/* adjust count array to reflect positions */
+	for (i = 1; i < 10; i++)
 		count[i] += count[i - 1];
 
-	/* Build the output array */
-	for (i = size - 1; i >= 0; i--)
+	/* build output array from back to preserve stability */
+	for (j = size - 1; j >= 0; j--)
 	{
-		output[count[(array[i] / exp) % base] - 1] = array[i];
-		count[(array[i] / exp) % base]--;
+		num = (array[j] / exp) % 10;
+		output[--count[num]] = array[j];
 	}
-
-	/* Copy the output array back to the original array */
-	for (j = 0; j < size; j++)
-		array[j] = output[j];
+	/* copy to array */
+	for (i = 0; i < size; i++)
+		array[i] = output[i];
 
 	free(output);
-	free(count);
+}
+
+
+/**
+ * radix_sort - implements the LSD radix sort algorithm
+ * @array: array to be sorted
+ * @size: size of the array
+ */
+
+void radix_sort(int *array, size_t size)
+{
+	int max, exp;
+	size_t i;
+
+	if (!array || size < 2)
+		return;
+
+	/* Get max value */
+	for (i = 1, max = array[0]; i < size; i++)
+		if (max < array[i])
+			max = array[i];
+
+	for (exp = 1; max / exp > 0; exp *= 10)
+	{
+		radix_counting_sort(array, size, exp);
+		print_array(array, size);
+	}
 }
