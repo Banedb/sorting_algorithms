@@ -1,6 +1,7 @@
 #include "sort.h"
 /**
- * recursive_quick_sort - recursive implementation of the quick sort algorithm
+ * recursive_quick_sort - recursive implementation of
+ * Lomuto's quick sort algorithm. Pivot is the last element.
  * @array: the array to be sorted
  * @size: size of the array
  * @low: beginning of array or sub-array to be sorted

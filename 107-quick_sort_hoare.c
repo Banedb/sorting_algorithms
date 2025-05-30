@@ -1,68 +1,49 @@
 #include "sort.h"
 
 /**
- * hoare_partition - Performs partition using the Hoare scheme
- * @array: The array to be partitioned
- * @size: The size of the array
- * @left: left side of the partition
- * @right: right side of the partition
- * Return: The final position of the pivot
+ * quick_sort_hoare_recursive - recursive implementation of
+ * Hoare's quick sort algorithm. Pivot is the last element.
+ * @array: array to be sorted
+ * @size: size of the array
+ * @low: beginning of array or sub-array to be sorted
+ * @high: end of array or sub-array to be sorted
  */
-int hoare_partition(int *array, size_t size, int left, int right)
+void quick_sort_hoare_recursive(int *array, size_t size, int low, int high)
 {
-	int pivot, high, low, temp;
+	int pivot, left, right, temp;
 
-	pivot = array[right];
-	for (high = left - 1, low = right + 1; high < low;)
+	if (low >= high)
+		return;
+
+	pivot = array[high];
+	for (right = high, left = low; left < right;)
 	{
-		do {
-			high++;
-		} while (array[high] < pivot);
-		do {
-			low--;
-		} while (array[low] > pivot);
-
-		if (high < low)
+		while (array[left] < pivot)
+			left++;
+		while (array[right] > pivot)
+			right--;
+		if (left < right)
 		{
-			temp = array[high];
-			array[high] = array[low];
-			array[low] = temp;
+			temp = array[left];
+			array[left++] = array[right];
+			array[right--] = temp;
 			print_array(array, size);
 		}
-	}
 
-	return (high);
+	}
+	quick_sort_hoare_recursive(array, size, low, left - 1);
+	quick_sort_hoare_recursive(array, size, left, high);
 }
 
-/**
- * quicksort_hoare - Perform Quick sort using Hoare partition scheme
- * @array: The array to be sorted
- * @size: The size of the array
- * @left: The left/lower index of the partition
- * @right: The right /higher index of the partition
- */
-void quicksort_hoare(int *array, size_t size, int left, int right)
-{
-	int part;
-
-	if (right - left > 0)
-	{
-		part = hoare_partition(array, size, left, right);
-		quicksort_hoare(array, size, left, part - 1);
-		quicksort_hoare(array, size, part, right);
-	}
-}
 
 /**
- * quick_sort_hoare - Sorts an array of integers in ascending order
- *         using Quick sort (Hoare partition scheme)
- * @array: The array to be sorted
- * @size: The size of the array
+ * quick_sort_hoare - initiates quick_sort_hoare_recursive
+ * @array: array to be sorted
+ * @size: size of the array to be sorted
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
-
-	quicksort_hoare(array, size, 0, size - 1);
+	quick_sort_hoare_recursive(array, size, 0, size - 1);
 }
