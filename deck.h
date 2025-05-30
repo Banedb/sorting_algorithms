@@ -1,14 +1,19 @@
 #ifndef DECK_H
 #define DECK_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /**
- * enum kind_e - Enumeration for different card suits
- * @SPADE: Represents the spade suit
- * @HEART: Represents the heart suit
- * @CLUB: Represents the club suit
- * @DIAMOND: Represents the diamond suit
+ * enum kind_e - Enumeration of card suits
  *
- * Description: Enumerates the possible suits for playing cards.
+ * @SPADE: Spade suit (0)
+ * @HEART: Heart suit (1)
+ * @CLUB: Club suit (2)
+ * @DIAMOND: Diamond suit (3)
+ *
+ * Represents the suit (kind) of a card in increasing order of priority.
+ * The sorting order is: Spades, Hearts, Clubs, then Diamonds.
  */
 typedef enum kind_e
 {
@@ -18,8 +23,6 @@ typedef enum kind_e
 	DIAMOND
 } kind_t;
 
-#include <stdio.h>
-#include <stdlib.h>
 /**
  * struct card_s - Playing card
  *
@@ -47,11 +50,13 @@ typedef struct deck_node_s
 	struct deck_node_s *next;
 } deck_node_t;
 
+
 int _strcmp(const char *s1, const char *s2);
-deck_node_t *swap_card(deck_node_t *card, deck_node_t **deck);
-int get_card_position(deck_node_t *node);
-void insertion_sort(deck_node_t **deck);
+int compare_cards(const card_t *card_1, const card_t *card_2);
+void insertion_sort_deck(deck_node_t **deck);
 void sort_deck(deck_node_t **deck);
 
 
-#endif /* DECK_H */
+
+
+#endif
