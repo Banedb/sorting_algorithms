@@ -16,17 +16,17 @@ void quick_sort_hoare_recursive(int *array, size_t size, int low, int high)
 		return;
 
 	pivot = array[high];
-	for (right = high, left = low; left < right;)
+	for (right = high + 1, left = low -1; left < right;)
 	{
-		while (array[left] < pivot)
+		for (left++; array[left] < pivot;)
 			left++;
-		while (array[right] > pivot)
+		for (right--; array[right] > pivot;)
 			right--;
 		if (left < right)
 		{
 			temp = array[left];
-			array[left++] = array[right];
-			array[right--] = temp;
+			array[left] = array[right];
+			array[right] = temp;
 			print_array(array, size);
 		}
 
