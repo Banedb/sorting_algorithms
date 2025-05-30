@@ -16,7 +16,7 @@ void quick_sort_hoare_recursive(int *array, size_t size, int low, int high)
 		return;
 
 	pivot = array[high];
-	for (right = high + 1, left = low -1; left < right;)
+	for (right = high + 1, left = low - 1; left < right;)
 	{
 		for (left++; array[left] < pivot;)
 			left++;
